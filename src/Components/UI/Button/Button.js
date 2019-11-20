@@ -5,6 +5,7 @@ class Button extends Component {
     render() {
         return (
                 <button
+                    disabled={this.props.disabled}
                     className={this.props.className}
                     type={this.props.type}
                     id={this.props.id}

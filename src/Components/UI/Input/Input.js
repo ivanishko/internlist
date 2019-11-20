@@ -7,7 +7,6 @@ class Input extends Component {
                     id={this.props.id}
                     className={this.props.class}
                     aria-label={this.props.ariaLabel}
-                    aria-describedby={this.props.ariaDescribedby}
                     placeholder={this.props.placeholder}
                     type={this.props.type}
                     onChange={this.props.onChange}

@@ -15,3 +15,6 @@ display: flex;
     min-height: 200px;
 
 }
+.list-group-item:last-child {
+    margin-bottom: 10px;
+}

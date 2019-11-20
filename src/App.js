@@ -1,17 +1,18 @@
 import React from 'react';
-import Input from "./Components/Input/Input";
-import Button from "./Components/Button/Button"
+import Input from "./Components/UI/Input/Input";
+import Button from "./Components/UI/Button/Button"
 import InternList from "./Components/InternList/InternList";
 import './App.css';
 
 class App extends React.Component {
 
     state = {
-      internItem: '',
-      internList: []
+        taskList : {},
+        internItem: '',
+        internList: []
     };
 
-  onChangeHandler = (event) => {
+    onChangeInputIntern = (event) => {
     this.setState(
     {internItem:event.target.value})
   };
@@ -29,7 +30,6 @@ class App extends React.Component {
             return {
                 internList: [...prevState.internList, internItem],
                 internItem: ''
-
             }
         },
         () => localStorage.setItem('internList',JSON.stringify(this.state.internList))
@@ -37,17 +37,68 @@ class App extends React.Component {
 
     componentDidMount() {
         const internList = JSON.parse(localStorage.getItem('internList')) || [];
+        const taskList = JSON.parse(localStorage.getItem('taskList')) || [];
+
         console.log('componentDidMount',this.state);
         this.setState({
-            internList
+                internList,
+                taskList
         }
-
         )
     }
+    createTask = (id,task) => {
+        this.setState(
+            (prevState) => {
 
+                const taskList = prevState.taskList[id] ? [...prevState.taskList[id], task] : [task];
+                const taskListObject = {};
+                taskListObject[id] = taskList;
+
+                return {
+                    taskList: {
+                        ...prevState.taskList,
+                        ...taskListObject
+                    }
+                }
+            },
+            () => {localStorage.setItem('taskList', JSON.stringify(this.state.taskList))
+            }
+        );
+    };
+
+    // createTask = (deskID,taskItem) => {
+    //     this.setState(
+    //         (prevState) => {
+    //             const taskList = prevState.taskList[deskID] ? [...prevState.taskList[deskID], taskItem] : [taskItem];
+    //             const taskListObject = {};
+    //             taskListObject[deskID] = taskList;
+    //             return {
+    //                 taskList: {
+    //                     ...prevState.taskList,
+    //                     ...taskListObject
+    //                 }
+    //             }
+    //         },
+    //         () => {
+    //             localStorage.setItem('taskList', JSON.stringify(this.state.taskList))
+    //         }
+    //     )
+    // };
+
+
+    deleteIntern = (id) => {
+        console.log('delete±');
+        this.setState(
+            prevState => ({
+                internList: prevState.internList.filter(el => el.id !== parseInt(id))
+            }),
+        () => {localStorage.setItem('internList', JSON.stringify(this.state.internList))
+            }
+        );
+
+    };
 
   render() {
-    console.log(this.state);
     return (
         <div className="App">
           <header className="App-header">
@@ -58,29 +109,31 @@ class App extends React.Component {
                 type="text"
                 class="form-control"
                 placeholder="Insert Intern name"
-                label="CreateIntern"
-                ariaLabel="Recipient's username"
                 ariaDescribedby="button-addon2"
-                onChange={this.onChangeHandler}
+                onChange={this.onChangeInputIntern}
                 value={this.state.internItem}
             />
                 <div className="input-group-append">
                 <Button
+                    disabled ={!this.state.internItem}
                     className="btn btn-outline-secondary"
                     onClick={this.onClickButtonAdd}
-                    text="Add intern"
+                    text="Add task"
                     type="button"
                     id="button-addon2"
-
                 />
                 </div>
 
             </div>
 
           <section>
+              {}
             <InternList
                 internList={this.state.internList}
                 getAllInternList = {this.getAllInternList}
+                deleteIntern = {this.deleteIntern}
+                createTask = {this.createTask}
+                taskList = {this.state.taskList}
             />
           </section>
 
