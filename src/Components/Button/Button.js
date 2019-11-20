@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
+import "./Button.css"
 
 class Button extends Component {
     render() {
         return (
-            <div>
                 <button
+                    className={this.props.className}
+                    type={this.props.type}
+                    id={this.props.id}
                     onKeyUp={this.props.onKeyUp}
                     onClick={this.props.onClick}
-
                 >
                     {this.props.text}
                 </button>
-            </div>
         );
     }
 }

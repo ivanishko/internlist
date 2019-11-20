@@ -12,21 +12,17 @@ class App extends React.Component {
     };
 
   onChangeHandler = (event) => {
-    console.log("input change");
     this.setState(
     {internItem:event.target.value})
   };
 
 
-  onClickButtonAdd = (event) => {
-      console.log("button click");
+  onClickButtonAdd = () => {
       const internId =  Math.round(Math.random()*1000);
       const internItem = {
           id:internId,
           intern:this.state.internItem,
-
-
-      }
+      };
 
     this.setState(
         (prevState) => {
@@ -39,6 +35,16 @@ class App extends React.Component {
         () => localStorage.setItem('internList',JSON.stringify(this.state.internList))
   )};
 
+    componentDidMount() {
+        const internList = JSON.parse(localStorage.getItem('internList')) || [];
+        console.log('componentDidMount',this.state);
+        this.setState({
+            internList
+        }
+
+        )
+    }
+
 
   render() {
     console.log(this.state);
@@ -47,21 +53,35 @@ class App extends React.Component {
           <header className="App-header">
             <h1>Intern List</h1>
           </header>
-          <Input
-              type="text"
-              label="Create intern"
-              onChange={this.onChangeHandler}
-              value={this.state.internItem}
-          >
+            <div className="App-intern-add input-group ">
+                <Input
+                type="text"
+                class="form-control"
+                placeholder="Insert Intern name"
+                label="CreateIntern"
+                ariaLabel="Recipient's username"
+                ariaDescribedby="button-addon2"
+                onChange={this.onChangeHandler}
+                value={this.state.internItem}
+            />
+                <div className="input-group-append">
+                <Button
+                    className="btn btn-outline-secondary"
+                    onClick={this.onClickButtonAdd}
+                    text="Add intern"
+                    type="button"
+                    id="button-addon2"
 
-          </Input>
-          <Button
-              onClick={this.onClickButtonAdd}
-              text="Add intern"
+                />
+                </div>
 
-          />
+            </div>
+
           <section>
-            <InternList />
+            <InternList
+                internList={this.state.internList}
+                getAllInternList = {this.getAllInternList}
+            />
           </section>
 
 

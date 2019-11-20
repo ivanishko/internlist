@@ -1,0 +1,17 @@
+.InternList {
+display: flex;
+}
+
+.InternList ul{
+     display: flex;
+    flex-wrap: wrap;
+
+}
+
+.InternList-li {
+    margin: 10px;
+    padding:  10px;
+    min-width: 400px;
+    min-height: 200px;
+
+}

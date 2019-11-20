@@ -20,3 +20,9 @@
 .App-link {
   color: #09d3ac;
 }
+
+.App-intern-add {
+  max-width: 500px;
+  margin: 10px auto;
+  justify-content: center;
+}
