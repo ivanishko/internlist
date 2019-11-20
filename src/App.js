@@ -37,7 +37,7 @@ class App extends React.Component {
 
     componentDidMount() {
         const internList = JSON.parse(localStorage.getItem('internList')) || [];
-        const taskList = JSON.parse(localStorage.getItem('taskList')) || [];
+        const taskList = JSON.parse(localStorage.getItem('taskList')) || {};
 
         console.log('componentDidMount',this.state);
         this.setState({
