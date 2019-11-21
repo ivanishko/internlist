@@ -2,6 +2,14 @@
 
 }
 
-.TaskList .table-width {
-    width:75%;
+.table th.table-width {
+    width:80%;
+}
+
+.table td {
+    text-align: left;
+}
+
+.table td.strike {
+    text-decoration: line-through;
 }

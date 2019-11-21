@@ -18,3 +18,9 @@ display: flex;
 .list-group-item:last-child {
     margin-bottom: 10px;
 }
+
+.inserttask {
+    width: 500px;
+    display: flex;
+    margin: 0 auto;
+}

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {Component} from 'react';
 import Button from "../UI/Button/Button";
 
@@ -9,14 +10,23 @@ class TaskList extends Component {
         taskList: ''
     };
 
+    checkTask = (id) => () => {
+        this.props.checkTask(this.props.id,id)
+    };
+
+    deleteTask = (id) => () => {
+        this.props.deleteTask(this.props.id,id)
+
+    };
+
+
     getAllTaskList = (taskList) => {
-        console.log(taskList);
         return taskList && taskList.map((task, index)=> (
             <tr key={index}>
                 <th scope="row">{index  + 1 }.</th>
-                <td> {task.task}</td>
-                <td><Button text="V"/></td>
-                <td><Button text="X"/></td>
+                <td  className={task.done ? "strike": ''} >{task.task}</td>
+                <td><Button className="btn btn-success" onClick={ this.checkTask(task.id)} text="V"/></td>
+                <td><Button className="btn btn-danger" onClick={ this.deleteTask(task.id)} text="X"/></td>
             </tr>
         ))
     };
@@ -29,7 +39,7 @@ class TaskList extends Component {
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col table-width">Task</th>
+                    <th scope="col" className="table-width">Task</th>
                     <th scope="col">ch</th>
                     <th scope="col">del</th>
                 </tr>

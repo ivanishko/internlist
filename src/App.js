@@ -1,6 +1,8 @@
+/* eslint-disable */
 import React from 'react';
 import Input from "./Components/UI/Input/Input";
 import Button from "./Components/UI/Button/Button"
+import Select from "./Components/UI/Select/Select";
 import InternList from "./Components/InternList/InternList";
 import './App.css';
 
@@ -66,26 +68,6 @@ class App extends React.Component {
         );
     };
 
-    // createTask = (deskID,taskItem) => {
-    //     this.setState(
-    //         (prevState) => {
-    //             const taskList = prevState.taskList[deskID] ? [...prevState.taskList[deskID], taskItem] : [taskItem];
-    //             const taskListObject = {};
-    //             taskListObject[deskID] = taskList;
-    //             return {
-    //                 taskList: {
-    //                     ...prevState.taskList,
-    //                     ...taskListObject
-    //                 }
-    //             }
-    //         },
-    //         () => {
-    //             localStorage.setItem('taskList', JSON.stringify(this.state.taskList))
-    //         }
-    //     )
-    // };
-
-
     deleteIntern = (id) => {
         console.log('delete±');
         this.setState(
@@ -97,6 +79,56 @@ class App extends React.Component {
         );
 
     };
+    checkTask = (internID,taskID) => {
+       // const taskList = this.state.taskList[internID];
+       // let task = taskList.find(task => task.id === taskID);
+       // task.done = !task.done;
+
+        this.setState(
+            prevState => ({
+                taskList: {
+                    ...prevState.taskList,
+                    [internID]:prevState.taskList[internID].map(task => {
+                        if (task.id === taskID) {
+                        task.done = !task.done
+                        }
+                        return task
+                    })
+
+                }
+            }),
+            () => {
+                localStorage.setItem('taskList', JSON.stringify(this.state.taskList))
+                }
+        );
+
+    };
+
+    deleteTask = (internID,taskID) => {
+
+        this.setState(
+            prevState => ({
+                taskList: {
+                    ...prevState.taskList,
+                    [internID]:prevState.taskList[internID].filter(task => task.id !== taskID)
+                }
+            }),
+            () => {
+                localStorage.setItem('taskList', JSON.stringify(this.state.taskList))
+                console.log(this.state.taskList);
+            }
+        );
+
+    };
+
+    options = [
+        "a",
+        "b",
+        "c"
+    ]
+
+
+
 
   render() {
     return (
@@ -118,7 +150,7 @@ class App extends React.Component {
                     disabled ={!this.state.internItem}
                     className="btn btn-outline-secondary"
                     onClick={this.onClickButtonAdd}
-                    text="Add task"
+                    text="Add intern"
                     type="button"
                     id="button-addon2"
                 />
@@ -127,16 +159,42 @@ class App extends React.Component {
             </div>
 
           <section>
-              {}
+
             <InternList
                 internList={this.state.internList}
                 getAllInternList = {this.getAllInternList}
                 deleteIntern = {this.deleteIntern}
                 createTask = {this.createTask}
                 taskList = {this.state.taskList}
+                checkTask={this.checkTask}
+                deleteTask={this.deleteTask}
             />
           </section>
 
+
+                <div className="inserttask">
+                    <Input
+                        type="text"
+                        class="form-control"
+                        placeholder="Insert task"
+                        ariaDescribedby="button-addon2"
+                    />
+                    <Select
+                        className="custom-select"
+                        options={this.options}
+                        id="inputGroupSelect04"
+                        aria-label="select intern"
+                    />
+                    <div class="input-group-append">
+                        <Button
+                            className="btn btn-outline-secondary"
+                            text="Add!"
+                            type="button"
+                            id="button-addon3"
+                        />
+                    </div>
+
+                </div>
 
         </div>
     );

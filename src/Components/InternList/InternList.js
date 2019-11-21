@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {Component} from 'react';
 import InternDetail from "../InternDetail/InternDetail";
 import "./InternList.css";
@@ -19,6 +20,8 @@ class InternList extends Component {
                     deleteIntern={this.props.deleteIntern}
                     createTask = {this.props.createTask}
                     taskList = {this.props.taskList[intern.id]}
+                    checkTask={this.props.checkTask}
+                    deleteTask={this.props.deleteTask}
                 />
 
             </li>

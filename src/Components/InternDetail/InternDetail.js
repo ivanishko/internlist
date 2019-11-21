@@ -23,7 +23,6 @@ class InternDetail extends Component {
         this.setState({
             task
         });
-        console.log('task',this.state.task);
     };
 
     createTask = () => {
@@ -31,7 +30,8 @@ class InternDetail extends Component {
         const taskItem = {
             id:index,
             task:this.state.task,
-            idIntern: this.props.id
+            idIntern: this.props.id,
+            done: false
         };
         this.props.createTask(this.props.id, taskItem);
         this.setState({
@@ -41,10 +41,9 @@ class InternDetail extends Component {
 
 
     render() {
-        console.log('taskList',this.props.taskList);
         return (
             <div className="InternDetail">
-                <h3>{this.props.id} - {this.props.internName}</h3>
+                <h3>Intern - {this.props.internName}</h3>
                     <Button
 
                         className="del-button"
@@ -77,6 +76,9 @@ class InternDetail extends Component {
                 </div>
                 <TaskList
                     taskList={this.props.taskList}
+                    checkTask={this.props.checkTask}
+                    deleteTask={this.props.deleteTask}
+                    id={this.props.id}
                 />
             </div>
         );
