@@ -2,29 +2,9 @@
 import React from 'react';
 import Input from "./Components/UI/Input/Input";
 import Button from "./Components/UI/Button/Button"
-import Select from "./Components/UI/Select/Select";
 import InternList from "./Components/InternList/InternList";
 import './App.css';
 import AddingTasks from "./Components/AddingTasks/AddingTasks";
-
-
-// function  HiddenComponent(props) {
-//     if (props.visible) {
-//          return  <p>
-//              interns are enabled!
-//          </p>
-//         {/*<AddingTasks*/}
-//         {/*                taskSelect={this.state.taskSelect}*/}
-//         {/*                onChangeInputTask={this.onChangeInputTask}*/}
-//         {/*                options={this.state.internList}*/}
-//         {/*                changeSelectIntern={this.changeSelectIntern}*/}
-//         {/*                onClickButtonSelect={this.onClickButtonSelect}*/}
-//         {/*                selectIntern={this.state.selectIntern}*/}
-//         {/*            />*/}
-//     }
-//
-//     return <p>no interns!</p>
-// };
 
 
 class App extends React.Component {
@@ -230,12 +210,7 @@ class App extends React.Component {
                 deleteTask={this.deleteTask}
             />
           </section>
-
-
-
-
-                {/*<HiddenComponent visible={this.state.internList.length  > 0} />*/}
-
+            
 
             {this.state.internList.length  > 0 &&
             <AddingTasks
