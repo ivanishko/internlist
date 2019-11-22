@@ -26,3 +26,7 @@
   margin: 10px auto;
   justify-content: center;
 }
+
+.select {
+  width: 100%;
+}

@@ -5,19 +5,60 @@ import Button from "./Components/UI/Button/Button"
 import Select from "./Components/UI/Select/Select";
 import InternList from "./Components/InternList/InternList";
 import './App.css';
+import AddingTasks from "./Components/AddingTasks/AddingTasks";
+
+
+// function  HiddenComponent(props) {
+//     if (props.visible) {
+//          return  <p>
+//              interns are enabled!
+//          </p>
+//         {/*<AddingTasks*/}
+//         {/*                taskSelect={this.state.taskSelect}*/}
+//         {/*                onChangeInputTask={this.onChangeInputTask}*/}
+//         {/*                options={this.state.internList}*/}
+//         {/*                changeSelectIntern={this.changeSelectIntern}*/}
+//         {/*                onClickButtonSelect={this.onClickButtonSelect}*/}
+//         {/*                selectIntern={this.state.selectIntern}*/}
+//         {/*            />*/}
+//     }
+//
+//     return <p>no interns!</p>
+// };
+
 
 class App extends React.Component {
 
     state = {
+        taskSelect : '',
         taskList : {},
+        selectIntern: '',
         internItem: '',
         internList: []
     };
 
     onChangeInputIntern = (event) => {
     this.setState(
-    {internItem:event.target.value})
+    {
+        internItem:event.target.value,
+    })
+
   };
+
+    onChangeInputTask = (event) => {
+        this.setState(
+            {taskSelect:event.target.value})
+    };
+
+    changeSelectIntern = (event) => {
+        console.log("select change!",event.target.value);
+        this.setState(
+            {
+                selectIntern: event.target.value
+            }
+    )
+    };
+
 
 
   onClickButtonAdd = () => {
@@ -41,14 +82,32 @@ class App extends React.Component {
         const internList = JSON.parse(localStorage.getItem('internList')) || [];
         const taskList = JSON.parse(localStorage.getItem('taskList')) || {};
 
-        console.log('componentDidMount',this.state);
         this.setState({
                 internList,
                 taskList
         }
         )
     }
+
+    onClickButtonSelect = () => {
+
+        const index = Math.round(Math.random()* 1000);
+        const taskItem = {
+            id:index,
+            task:this.state.taskSelect,
+            idIntern: this.props.id,
+            done: false
+        };
+        this.createTask(this.state.selectIntern,taskItem);
+        this.setState({
+                taskSelect:'',
+                selectIntern: ''
+        }
+        )
+    };
+
     createTask = (id,task) => {
+        console.log(id,task);
         this.setState(
             (prevState) => {
 
@@ -69,7 +128,6 @@ class App extends React.Component {
     };
 
     deleteIntern = (id) => {
-        console.log('delete±');
         this.setState(
             prevState => ({
                 internList: prevState.internList.filter(el => el.id !== parseInt(id))
@@ -80,10 +138,6 @@ class App extends React.Component {
 
     };
     checkTask = (internID,taskID) => {
-       // const taskList = this.state.taskList[internID];
-       // let task = taskList.find(task => task.id === taskID);
-       // task.done = !task.done;
-
         this.setState(
             prevState => ({
                 taskList: {
@@ -94,18 +148,15 @@ class App extends React.Component {
                         }
                         return task
                     })
-
                 }
             }),
             () => {
                 localStorage.setItem('taskList', JSON.stringify(this.state.taskList))
                 }
         );
-
     };
 
     deleteTask = (internID,taskID) => {
-
         this.setState(
             prevState => ({
                 taskList: {
@@ -118,14 +169,24 @@ class App extends React.Component {
                 console.log(this.state.taskList);
             }
         );
-
     };
 
-    options = [
-        "a",
-        "b",
-        "c"
-    ]
+
+
+    // addingTask = () => {
+    //     if (this.state.internList.length > 0 ) {
+    //
+    //             return <AddingTasks
+    //                 taskSelect={this.state.taskSelect}
+    //                 onChangeInputTask={this.onChangeInputTask}
+    //                 options={this.state.internList}
+    //                 changeSelectIntern={this.changeSelectIntern}
+    //                 onClickButtonSelect={this.onClickButtonSelect}
+    //                 selectIntern={this.state.selectIntern}
+    //             />
+    //         }
+    //     }
+
 
 
 
@@ -155,7 +216,6 @@ class App extends React.Component {
                     id="button-addon2"
                 />
                 </div>
-
             </div>
 
           <section>
@@ -172,31 +232,27 @@ class App extends React.Component {
           </section>
 
 
-                <div className="inserttask">
-                    <Input
-                        type="text"
-                        class="form-control"
-                        placeholder="Insert task"
-                        ariaDescribedby="button-addon2"
-                    />
-                    <Select
-                        className="custom-select"
-                        options={this.options}
-                        id="inputGroupSelect04"
-                        aria-label="select intern"
-                    />
-                    <div class="input-group-append">
-                        <Button
-                            className="btn btn-outline-secondary"
-                            text="Add!"
-                            type="button"
-                            id="button-addon3"
-                        />
-                    </div>
 
-                </div>
+
+                {/*<HiddenComponent visible={this.state.internList.length  > 0} />*/}
+
+
+            {this.state.internList.length  > 0 &&
+            <AddingTasks
+                         taskSelect={this.state.taskSelect}
+                         onChangeInputTask={this.onChangeInputTask}
+                         options={this.state.internList}
+                         changeSelectIntern={this.changeSelectIntern}
+                         onClickButtonSelect={this.onClickButtonSelect}
+                         selectIntern={this.state.selectIntern}
+                     />
+            }
+
 
         </div>
+
+
+
     );
   }
 }

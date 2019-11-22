@@ -8,12 +8,9 @@ class InternList extends Component {
 
     getAllInternList =(internList) => {
         return internList.map((intern, index) => (
-
             //const taskList
-
             <li className="list-group-item InternList-li"
                 key={index}>
-
                 <InternDetail
                     id={intern.id}
                     internName={intern.intern}
